@@ -8,11 +8,14 @@ import (
 	"encoding/json"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/mux"
+	"github.com/midtrans/midtrans-go"
+	"github.com/midtrans/midtrans-go/snap"
 )
 
 /*
@@ -69,11 +72,6 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 
 	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
 	user_ID := int(userInfo["id"].(float64))
-	/*userName := userInfo["name"]
-	userEmail := userInfo["email"]
-
-	strName := fmt.Sprintf("%v", userName)
-	strEmail := fmt.Sprintf("%v", userEmail)*/
 
 	request := new(transactiondto.TransactionRequest)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
@@ -122,6 +120,7 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 		UserID:   user_ID,
 		TicketID: dataTic.ID,
 		Price:    request.Price,
+		Status:   "pending",
 	}
 
 	transaction, err = h.TransactionRepository.CreateTransaction(transaction)
@@ -164,29 +163,29 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 		Price:    transaction.Price,
 		Status:   transaction.Status,
 	}
-	/*
-		var s = snap.Client{}
-		s.New(os.Getenv("SERVER_KEY"), midtrans.Sandbox)
 
-		req := &snap.Request{
-			TransactionDetails: midtrans.TransactionDetails{
-				OrderID:  strconv.Itoa(data.ID),
-				GrossAmt: int64(data.TotalPrice),
-			},
-			CreditCard: &snap.CreditCardDetails{
-				Secure: true,
-			},
-			CustomerDetail: &midtrans.CustomerDetails{
-				FName: strName,
-				Email: strEmail,
-			},
-		}
+	var s = snap.Client{}
+	s.New(os.Getenv("SERVER_KEY"), midtrans.Sandbox)
 
-		snapResp, _ := s.CreateTransaction(req)*/
+	req := &snap.Request{
+		TransactionDetails: midtrans.TransactionDetails{
+			OrderID:  strconv.Itoa(data.ID),
+			GrossAmt: int64(data.Price),
+		},
+		CreditCard: &snap.CreditCardDetails{
+			Secure: true,
+		},
+		CustomerDetail: &midtrans.CustomerDetails{
+			FName: data.User.Name,
+			Email: data.User.Email,
+		},
+	}
+
+	snapResp, _ := s.CreateTransaction(req)
 
 	w.WriteHeader(http.StatusOK)
-	//response := dto.SuccessResult{Code: http.StatusOK, Status: "otw", Data: snapResp}
-	response := dto.SuccessResult{Code: http.StatusOK, Status: "otw", Data: data}
+	response := dto.SuccessResult{Code: http.StatusOK, Status: "otw", Data: snapResp}
+	//response := dto.SuccessResult{Code: http.StatusOK, Status: "otw", Data: data}
 	json.NewEncoder(w).Encode(response)
 }
 
@@ -251,24 +250,24 @@ func (h *handlerTransaction) UpdateTransaction(w http.ResponseWriter, r *http.Re
 
 func (h *handlerTransaction) DeleteTransaction(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-
-	//userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
-	//userRole := userInfo["role"]
-	//userID := int(userInfo["id"].(float64))
 	/*
-		id, _ := strconv.Atoi(mux.Vars(r)["id"])
+		userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
+		userRole := userInfo["role"]
+		userID := int(userInfo["id"].(float64))
 
-		transaction, err := h.TransactionRepository.GetTransaction(id)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			response := dto.ErrorResult{Code: http.StatusBadRequest, Status: "failed", Message: err.Error()}
-			json.NewEncoder(w).Encode(response)
-			return
-		}
+			id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
-		w.WriteHeader(http.StatusOK)
-		response := dto.SuccessResult{Code: http.StatusOK, Status: "success", Data: data}
-		json.NewEncoder(w).Encode(response)*/
+			transaction, err := h.TransactionRepository.GetTransaction(id)
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				response := dto.ErrorResult{Code: http.StatusBadRequest, Status: "failed", Message: err.Error()}
+				json.NewEncoder(w).Encode(response)
+				return
+			}
+
+			w.WriteHeader(http.StatusOK)
+			response := dto.SuccessResult{Code: http.StatusOK, Status: "success", Data: data}
+			json.NewEncoder(w).Encode(response)*/
 
 }
 

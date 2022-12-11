@@ -7,6 +7,7 @@ type Ticket struct {
 	EventID int           `json:"event_id" form:"event_id"`
 	Event   Event         `json:"event" form:"event" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	Qty     int           `json:"qty" form:"qty"`
+	Status  string        `json:"status" form:"status"`
 }
 
 type TicketResponse struct {

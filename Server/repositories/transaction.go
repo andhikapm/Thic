@@ -53,8 +53,13 @@ func (r *repository) UpdatePayment(status string, ID string) error {
 	var transaction models.Transaction
 	r.db.Preload("User").Preload("Ticket").First(&transaction, ID)
 
+	var ticket models.Ticket
+	r.db.Preload("User").Preload("Event").First(&ticket, transaction.TicketID)
+
+	ticket.Status = status
 	transaction.Status = status
 
+	r.db.Preload("User").Preload("Event").Save(&ticket)
 	err := r.db.Preload("User").Preload("Ticket").Save(&transaction).Error
 
 	return err

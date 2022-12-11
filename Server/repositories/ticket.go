@@ -12,7 +12,7 @@ type TicketRepository interface {
 	CreateTicket(ticket models.Ticket) (models.Ticket, error)
 	UpdateTicket(ticket models.Ticket) (models.Ticket, error)
 	DeleteTicket(ticket models.Ticket) (models.Ticket, error)
-	WhereUserTicket(ID int) ([]models.Ticket, error)
+	WherePayTicket(ID int) ([]models.Ticket, error)
 }
 
 func RepositoryTicket(db *gorm.DB) *repository {
@@ -51,9 +51,8 @@ func (r *repository) DeleteTicket(ticket models.Ticket) (models.Ticket, error) {
 	return ticket, err
 }
 
-func (r *repository) WhereUserTicket(ID int) ([]models.Ticket, error) {
+func (r *repository) WherePayTicket(ID int) ([]models.Ticket, error) {
 	var ticket []models.Ticket
-	err := r.db.Preload("User").Preload("Event").Where("user_id = ?", ID).Find(&ticket).Error
-
+	err := r.db.Preload("User").Preload("Event").Where("user_id = ? AND status = ?", ID, "waiting").Find(&ticket).Error
 	return ticket, err
 }

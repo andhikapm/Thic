@@ -111,8 +111,6 @@ func (h *handlerAuth) Login(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 	claims["id"] = user.ID
-	claims["name"] = user.Name
-	claims["email"] = user.Email
 	claims["role"] = user.Role
 	claims["exp"] = time.Now().Add(time.Hour * 2).Unix() // 2 hours expired
 

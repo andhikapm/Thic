@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://testdrive.pagekite.me/api/v1/",
-  //baseURL: process.env.REACT_APP_BASEURL,
+  //baseURL: "http://testdrive.pagekite.me/api/v1/",
+  baseURL: process.env.REACT_APP_BASEURL,
 });
 
 export const setAuthToken = (token) => {

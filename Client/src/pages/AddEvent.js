@@ -54,7 +54,7 @@ const AddEvent = () => {
          formData.set('email', form.email);
          formData.set('description', form.description);
 
-         const response = await API.post('/event', formData)
+         const response = await API.post('/addevent', formData)
    
          console.log("data berhasil ditambahkan", response)
   

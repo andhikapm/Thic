@@ -8,6 +8,7 @@ import {Tickets} from '../data/DataTicket';
 import { API } from '../config/api';
 import qrCode from '../assets/qrcode.png';
 import { useQuery } from 'react-query';
+import moment from 'moment'
 
 const MyTicket = () => {
    const navigate = useNavigate();
@@ -41,8 +42,8 @@ const MyTicket = () => {
                      </div>
                      <Card 
                         className='border-0 py-0 bg-light rounded-0' 
-                        style={{ width: '100%', backgroundColor : '#f4dcdc', cursor: 'pointer', borderColor: '#acacac', boxShadow: "0 2px 4px rgba(0, 0, 0, .3)" }} 
-                        onClick={() => navigate(`/detail-event/${item.id}`)}
+                        style={{ width: '100%', backgroundColor : '#f4dcdc', cursor: 'pointer', borderColor: '#acacac', boxShadow: "0 2px 4px rgba(0, 0, 0, .3)" }}
+                        onClick={() => {}}
                      >  
                         <Card.Body className='px-0 py-0'>
                            <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
@@ -57,7 +58,9 @@ const MyTicket = () => {
                         <Card.Body className='d-flex justify-content-between pt-3 px-4'>
                            <div className='col-9'>
                               <h2 className='fw-bolder' style={{color: "#454545"}}>{item.event.title}</h2>
-                              <p className='fs-5 fw-semibold mb-1 text-muted'>{item.event.startdate}</p>
+                              <p className='fs-5 fw-semibold mb-1 text-muted'>
+                                 {moment(new Date(item.event.startdate)).format("D MMM YYYY H.mm")}
+                              </p>
                               <h6 className='text-muted' style={{fontSize: "1.1rem"}}>{item.event.address}</h6>
                            </div>
                            <div className='col-3 text-end'>

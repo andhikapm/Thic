@@ -57,6 +57,8 @@ const AddEvent = () => {
          const response = await API.post('/addevent', formData)
    
          console.log("data berhasil ditambahkan", response)
+
+         navigate("/")
   
       } catch (err) {
         console.log(err)

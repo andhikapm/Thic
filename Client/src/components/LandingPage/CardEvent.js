@@ -3,14 +3,12 @@ import { Card} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom"
 import wishlistIcon from '../../assets/wishlist.png';
 import wishlistWhite from '../../assets/wishlistWhite.png'
+import { API } from '../../config/api';
 
 export default function CardEvent(props) {
    const navigate = useNavigate();
 
    const [startState, setStartState] = useState(new Date())
-
-   const [wishlist, setWishlist] = useState([]);
-
   
    useEffect(() => {
       setStartState(new Date(props.startdate))
@@ -18,13 +16,10 @@ export default function CardEvent(props) {
 
    const handlerWishlist = async(id, price) => {
       try {
-
-         let filterID = wishlist.filter((e) => e === id);
-         if (filterID[0] !== id) {
-            setWishlist([...wishlist, id])
-         } else {
-            setWishlist(wishlist.filter((e) => e !== id));
-         }
+         
+         await API.patch('/addwishlist', {
+            event_id: parseInt(id)
+         })
 
       } catch (err) {
          console.log(err)
@@ -53,20 +48,12 @@ export default function CardEvent(props) {
                            <h2 className='col-10 fs-4 fw-bold'>{props.title}</h2>
                         )}
                         <div className='col-2'></div>
-                        {wishlist.filter((e) => e === props.id)[0] === props.id && (
                            <div className='position-absolute' style={{right: "18px", top: "14px", zIndex: "99"}}>
                               <img width="34px" src={wishlistIcon}
                                  onClick={() => handlerWishlist(props.id)}
                                  style={{cursor: 'pointer'}}
                               />
                            </div>
-                        )}
-                        <div className='position-absolute' style={{right: "18px", top: "14px"}}>
-                           <img width="34px" src={wishlistWhite}
-                              onClick={() => handlerWishlist(props.id)}
-                              style={{cursor: 'pointer'}}
-                           />
-                        </div>
                      </div>
                      <p className='fs-5 fw-bold mb-1' style={{color: "#ff5555"}}>
                         {startState.toLocaleDateString('en-GB', {

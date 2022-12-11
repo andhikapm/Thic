@@ -5,6 +5,7 @@ import { AppContext } from '../../contexts/AppContext';
 import { UserContext } from '../../contexts/UserContext';
 import { API } from '../../config/api';
 import { useQuery } from 'react-query';
+import moment from 'moment';
 
 const TicketPayment = (props) => {
     const navigate = useNavigate();
@@ -100,7 +101,9 @@ const TicketPayment = (props) => {
                     </Card.Body>
                     <Card.Body className='position-relative flex align-items-center pt-3 px-4'>
                         <h2 className='fw-bolder' style={{color: "#454545"}}>{props.event.title}</h2>
-                        <p className='fs-5 fw-semibold mb-1 text-muted'>{props.event.startdate}</p>
+                        <p className='fs-5 fw-semibold mb-1 text-muted'>
+                          {moment(new Date(props.event.startdate)).format("D MMM YYYY H.mm")}
+                        </p>
                         <p className='text-muted' style={{fontSize: "1.1rem"}}>{props.event.address}</p>
                     </Card.Body>
                 </Card>

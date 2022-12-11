@@ -43,21 +43,21 @@ func (h *handlerEvent) FindEvents(w http.ResponseWriter, r *http.Request) {
 
 	var data []models.Event
 	for _, s := range events {
-
-		const longForm = "Mon, 02 Jan 2006 15:04:00 MST"
-		aStart, _ := time.Parse(longForm, s.StartDate)
-		aEnd, _ := time.Parse(longForm, s.EndDate)
+		/*
+			const longForm = "Mon, 02 Jan 2006 15:04:00 MST"
+			aStart, _ := time.Parse(longForm, s.StartDate)
+			aEnd, _ := time.Parse(longForm, s.EndDate)*/
 
 		dataGet := models.Event{
-			ID:        s.ID,
-			Title:     s.Title,
-			Category:  s.Category,
-			Image:     s.Image,
-			StartDate: aStart.Local().Format(time.RFC1123),
-			EndDate:   aEnd.Local().Format(time.RFC1123),
-			Price:     s.Price,
-			Address:   s.Address,
-			//UrlMap:      s.UrlMap,
+			ID:          s.ID,
+			Title:       s.Title,
+			Category:    s.Category,
+			Image:       s.Image,
+			StartDate:   s.StartDate,
+			EndDate:     s.EndDate,
+			Price:       s.Price,
+			Address:     s.Address,
+			UrlMap:      s.UrlMap,
 			Phone:       s.Phone,
 			Email:       s.Email,
 			Description: s.Description,
@@ -84,21 +84,21 @@ func (h *handlerEvent) GetEvent(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 		return
 	}
-
-	const longForm = "Mon, 02 Jan 2006 15:04:00 MST"
-	aStart, _ := time.Parse(longForm, event.StartDate)
-	aEnd, _ := time.Parse(longForm, event.EndDate)
+	/*
+		const longForm = "Mon, 02 Jan 2006 15:04:00 MST"
+		aStart, _ := time.Parse(longForm, event.StartDate)
+		aEnd, _ := time.Parse(longForm, event.EndDate)*/
 
 	data := models.Event{
-		ID:        event.ID,
-		Title:     event.Title,
-		Category:  event.Category,
-		Image:     event.Image,
-		StartDate: aStart.Local().Format(time.RFC1123),
-		EndDate:   aEnd.Local().Format(time.RFC1123),
-		Price:     event.Price,
-		Address:   event.Address,
-		//UrlMap:      event.UrlMap,
+		ID:          event.ID,
+		Title:       event.Title,
+		Category:    event.Category,
+		Image:       event.Image,
+		StartDate:   event.StartDate,
+		EndDate:     event.EndDate,
+		Price:       event.Price,
+		Address:     event.Address,
+		UrlMap:      event.UrlMap,
 		Phone:       event.Phone,
 		Email:       event.Email,
 		Description: event.Description,
@@ -135,13 +135,13 @@ func (h *handlerEvent) CreateEvent(w http.ResponseWriter, r *http.Request) {
 	price, _ := strconv.Atoi(r.FormValue("price"))
 
 	request := eventdto.EventRequest{
-		Title:     r.FormValue("title"),
-		Category:  r.FormValue("category"),
-		StartDate: r.FormValue("startdate"), //2022-12-08T14:45
-		EndDate:   r.FormValue("enddate"),
-		Price:     price,
-		Address:   r.FormValue("address"),
-		//UrlMap:      r.FormValue("urlMap"),
+		Title:       r.FormValue("title"),
+		Category:    r.FormValue("category"),
+		StartDate:   r.FormValue("startdate"), //2022-12-08T14:45
+		EndDate:     r.FormValue("enddate"),
+		Price:       price,
+		Address:     r.FormValue("address"),
+		UrlMap:      r.FormValue("urlMap"),
 		Phone:       r.FormValue("phone"),
 		Email:       r.FormValue("email"),
 		Description: r.FormValue("description"),
@@ -165,14 +165,14 @@ func (h *handlerEvent) CreateEvent(w http.ResponseWriter, r *http.Request) {
 	}
 
 	event := models.Event{
-		Title:     request.Title,
-		Category:  request.Category,
-		StartDate: request.StartDate,
-		EndDate:   request.EndDate,
-		Image:     resp.SecureURL,
-		Price:     request.Price,
-		Address:   request.Address,
-		//UrlMap:      request.UrlMap,
+		Title:       request.Title,
+		Category:    request.Category,
+		StartDate:   request.StartDate,
+		EndDate:     request.EndDate,
+		Image:       resp.SecureURL,
+		Price:       request.Price,
+		Address:     request.Address,
+		UrlMap:      request.UrlMap,
 		Phone:       request.Phone,
 		Email:       request.Email,
 		Description: request.Description,
@@ -222,11 +222,11 @@ func (h *handlerEvent) UpdateEvent(w http.ResponseWriter, r *http.Request) {
 	price, _ := strconv.Atoi(r.FormValue("price"))
 
 	request := eventdto.EventRequest{
-		Title:    r.FormValue("title"),
-		Category: r.FormValue("category"),
-		Price:    price,
-		Address:  r.FormValue("address"),
-		//UrlMap:      r.FormValue("urlMap"),
+		Title:       r.FormValue("title"),
+		Category:    r.FormValue("category"),
+		Price:       price,
+		Address:     r.FormValue("address"),
+		UrlMap:      r.FormValue("urlMap"),
 		Phone:       r.FormValue("phone"),
 		Email:       r.FormValue("email"),
 		Description: r.FormValue("description"),
@@ -263,10 +263,10 @@ func (h *handlerEvent) UpdateEvent(w http.ResponseWriter, r *http.Request) {
 	if request.Address != "" {
 		event.Address = request.Address
 	}
-	/*
-		if request.UrlMap != "" {
-			event.UrlMap = request.UrlMap
-		}*/
+
+	if request.UrlMap != "" {
+		event.UrlMap = request.UrlMap
+	}
 
 	if request.Phone != "" {
 		event.Phone = request.Phone
@@ -347,21 +347,21 @@ func (h *handlerEvent) CatarEvents(w http.ResponseWriter, r *http.Request) {
 
 	var data []models.Event
 	for _, s := range events {
-
-		const longForm = "Mon, 02 Jan 2006 15:04:00 MST"
-		aStart, _ := time.Parse(longForm, s.StartDate)
-		aEnd, _ := time.Parse(longForm, s.EndDate)
+		/*
+			const longForm = "Mon, 02 Jan 2006 15:04:00 MST"
+			aStart, _ := time.Parse(longForm, s.StartDate)
+			aEnd, _ := time.Parse(longForm, s.EndDate)*/
 
 		dataGet := models.Event{
-			ID:        s.ID,
-			Title:     s.Title,
-			Category:  s.Category,
-			Image:     s.Image,
-			StartDate: aStart.Local().Format(time.RFC1123),
-			EndDate:   aEnd.Local().Format(time.RFC1123),
-			Price:     s.Price,
-			Address:   s.Address,
-			//UrlMap:      s.UrlMap,
+			ID:          s.ID,
+			Title:       s.Title,
+			Category:    s.Category,
+			Image:       s.Image,
+			StartDate:   s.StartDate,
+			EndDate:     s.EndDate,
+			Price:       s.Price,
+			Address:     s.Address,
+			UrlMap:      s.UrlMap,
 			Phone:       s.Phone,
 			Email:       s.Email,
 			Description: s.Description,
@@ -401,15 +401,15 @@ func (h *handlerEvent) TodayEvent(w http.ResponseWriter, r *http.Request) {
 		aEnd, _ := time.Parse(longForm, s.EndDate)
 
 		dataGet := models.Event{
-			ID:        s.ID,
-			Title:     s.Title,
-			Category:  s.Category,
-			Image:     s.Image,
-			StartDate: aStart.Local().Format(time.RFC1123),
-			EndDate:   aEnd.Local().Format(time.RFC1123),
-			Price:     s.Price,
-			Address:   s.Address,
-			//UrlMap:      s.UrlMap,
+			ID:          s.ID,
+			Title:       s.Title,
+			Category:    s.Category,
+			Image:       s.Image,
+			StartDate:   s.StartDate,
+			EndDate:     s.EndDate,
+			Price:       s.Price,
+			Address:     s.Address,
+			UrlMap:      s.UrlMap,
 			Phone:       s.Phone,
 			Email:       s.Email,
 			Description: s.Description,
@@ -450,18 +450,18 @@ func (h *handlerEvent) UpcomingEvent(w http.ResponseWriter, r *http.Request) {
 	for _, s := range events {
 
 		aStart, _ := time.Parse(longForm, s.StartDate)
-		aEnd, _ := time.Parse(longForm, s.EndDate)
+		//aEnd, _ := time.Parse(longForm, s.EndDate)
 
 		dataGet := models.Event{
-			ID:        s.ID,
-			Title:     s.Title,
-			Category:  s.Category,
-			Image:     s.Image,
-			StartDate: aStart.Local().Format(time.RFC1123),
-			EndDate:   aEnd.Local().Format(time.RFC1123),
-			Price:     s.Price,
-			Address:   s.Address,
-			//UrlMap:      s.UrlMap,
+			ID:          s.ID,
+			Title:       s.Title,
+			Category:    s.Category,
+			Image:       s.Image,
+			StartDate:   s.StartDate,
+			EndDate:     s.EndDate,
+			Price:       s.Price,
+			Address:     s.Address,
+			UrlMap:      s.UrlMap,
 			Phone:       s.Phone,
 			Email:       s.Email,
 			Description: s.Description,
@@ -502,15 +502,15 @@ func (h *handlerEvent) CheckingEvent(w http.ResponseWriter, r *http.Request) {
 			s.Status = "Close"
 
 			dataGet := models.Event{
-				ID:        s.ID,
-				Title:     s.Title,
-				Category:  s.Category,
-				Image:     s.Image,
-				StartDate: s.StartDate,
-				EndDate:   s.EndDate,
-				Price:     s.Price,
-				Address:   s.Address,
-				//UrlMap:      s.UrlMap,
+				ID:          s.ID,
+				Title:       s.Title,
+				Category:    s.Category,
+				Image:       s.Image,
+				StartDate:   s.StartDate,
+				EndDate:     s.EndDate,
+				Price:       s.Price,
+				Address:     s.Address,
+				UrlMap:      s.UrlMap,
 				Phone:       s.Phone,
 				Email:       s.Email,
 				Description: s.Description,

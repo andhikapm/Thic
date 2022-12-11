@@ -9,17 +9,6 @@ const Favorite = (props) => {
    const contexts = useContext(AppContext);
    const [state,] = useContext(UserContext);
 
-   const [wishlist, setWishlist] = useState([]);
-
-   const handlerWishlist = (id, price) => {
-      let filterID = wishlist.filter((e) => e === id);
-      if (filterID[0] !== id) {
-         setWishlist([...wishlist, id])
-      } else {
-         setWishlist(wishlist.filter((e) => e !== id));
-      }
-   };
-
    return (
       <Container className='row mx-auto pb-5 px-0 mb-4' style={{marginTop: "60px"}}>
          <h1 className='fw-bolder px-4 pb-4' style={{color: "#ff5555"}}>Favorite</h1>

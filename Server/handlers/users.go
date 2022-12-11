@@ -101,7 +101,7 @@ func (h *handlerUser) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	resp, _ := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "Buckbug"})
+	resp, _ := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "ThicToc"})
 
 	if request.Name != "" {
 		user.Name = request.Name

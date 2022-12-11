@@ -158,7 +158,7 @@ func (h *handlerEvent) CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "Buckbug"})
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "ThicToc"})
 
 	if err != nil {
 		fmt.Println(err.Error())

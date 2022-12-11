@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 func UploadFile(next http.HandlerFunc) http.HandlerFunc {
@@ -25,6 +26,18 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
+		var namingFile string
+		checkProTopName := r.FormValue("title")
+		checkUserName := r.FormValue("name")
+
+		if checkProTopName != "" {
+			checkProTopName = strings.ReplaceAll(checkProTopName, " ", "-")
+			namingFile = checkProTopName
+		} else {
+			checkUserName = strings.ReplaceAll(checkUserName, " ", "-")
+			namingFile = checkUserName
+		}
+
 		defer file.Close()
 
 		const MAX_UPLOAD_SIZE = 10 << 20 // 10MB
@@ -38,7 +51,7 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		tempFile, err := ioutil.TempFile("uploads", "image-*.png")
+		tempFile, err := ioutil.TempFile("uploads", namingFile+"-*.png")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println("path upload error")

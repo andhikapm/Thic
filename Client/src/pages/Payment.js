@@ -13,8 +13,8 @@ const Payment = () => {
 
    API.patch("/checkevent")
    
-   let { data: ticketU } = useQuery("userticketCache", async () => {
-      const response = await API.get('/userticket')
+   let { data: ticketU } = useQuery("payticketCache", async () => {
+      const response = await API.get('/payticket')
       //console.log("berhasil ambil detail", response.data.data)
       return response.data.data
    })

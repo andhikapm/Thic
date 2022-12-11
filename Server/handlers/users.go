@@ -119,9 +119,9 @@ func (h *handlerUser) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		user.Email = request.Email
 	}
 
-	if filepath != "false" {
-		user.Image = resp.SecureURL
-	}
+	//if filepath != "false" {
+	user.Image = resp.SecureURL
+	//}
 
 	data, err := h.UserRepository.UpdateUser(user)
 	if err != nil {

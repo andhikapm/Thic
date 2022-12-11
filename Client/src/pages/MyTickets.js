@@ -16,8 +16,8 @@ const MyTicket = () => {
 
    API.patch("/checkevent")
    
-   let { data: ticketU } = useQuery("userticketCache", async () => {
-      const response = await API.get('/userticket')
+   let { data: ticketU } = useQuery("myticketCache", async () => {
+      const response = await API.get('/myticket')
       //console.log("berhasil ambil detail", response.data.data)
       return response.data.data
    })
@@ -29,7 +29,7 @@ const MyTicket = () => {
          >
             <h1 className='fw-bolder pb-4' style={{color: "#ff5555"}}>My Ticket</h1>
             <div className='bg-light' style={{borderTop: "8px solid #ff5555", padding: "80px 120px 20px"}}>
-               {Tickets.map((item, index) => (
+               {ticketU?.map((item, index) => (
                   <div key={index} className='position-relative py-4 ps-5 pe-4 mb-5' style={{backgroundColor: "#ff5555"}}>
                      <div 
                         className='bg-light rounded-circle position-absolute' 
@@ -47,7 +47,7 @@ const MyTicket = () => {
                         <Card.Body className='px-0 py-0'>
                            <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
                               <p className='col-6 fw-semibold fs-4 mb-0' style={{color: "#454545"}}>Is Bos</p>
-                              <p className='col-6 text-end mb-0' style={{color: "#454545"}}>Face value Rp. {item.price}</p>
+                              <p className='col-6 text-end mb-0' style={{color: "#454545"}}>Face value Rp. {item.event.price}</p>
                            </div>
                            <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
                               <p className='col-6 fs-5 mb-1 text-muted'>id.users</p>
@@ -56,9 +56,9 @@ const MyTicket = () => {
                         </Card.Body>
                         <Card.Body className='d-flex justify-content-between pt-3 px-4'>
                            <div className='col-9'>
-                              <h2 className='fw-bolder' style={{color: "#454545"}}>{item.eventTitle}</h2>
-                              <p className='fs-5 fw-semibold mb-1 text-muted'>{item.time}</p>
-                              <h6 className='text-muted' style={{fontSize: "1.1rem"}}>{item.location}</h6>
+                              <h2 className='fw-bolder' style={{color: "#454545"}}>{item.event.title}</h2>
+                              <p className='fs-5 fw-semibold mb-1 text-muted'>{item.event.startdate}</p>
+                              <h6 className='text-muted' style={{fontSize: "1.1rem"}}>{item.event.address}</h6>
                            </div>
                            <div className='col-3 text-end'>
                               <div style={{height: "118px"}}>

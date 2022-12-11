@@ -43,12 +43,12 @@ const TicketPayment = (props) => {
                 price: parseInt(total),
             })
             
-            //const token = response.data.data.token;
+            const token = response.data.data.token;
       
             console.log("response post transaction", response)
             //console.log("ini tokennya", token)
       
-/*
+
             window.snap.pay(token, {
                 onSuccess: function (result) {
                   console.log(result);
@@ -62,7 +62,7 @@ const TicketPayment = (props) => {
                 onClose: function () {
                   alert("you closed the popup without finishing the payment");
                 },
-              });*/
+              });
     
         } catch (err) {
           console.log(err)

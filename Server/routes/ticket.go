@@ -19,4 +19,5 @@ func TicketRoutes(r *mux.Router) {
 	r.HandleFunc("/ticket/{id}", middleware.Auth(h.UpdateTicket)).Methods("PATCH")
 	r.HandleFunc("/ticket/{id}", middleware.Auth(h.DeleteTicket)).Methods("DELETE")
 	r.HandleFunc("/payticket", middleware.Auth(h.PayTickets)).Methods("GET")
+	r.HandleFunc("/myticket", middleware.Auth(h.UserTickets)).Methods("GET")
 }

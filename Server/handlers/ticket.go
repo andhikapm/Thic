@@ -86,7 +86,7 @@ func (h *handlerTicket) CreateTicket(w http.ResponseWriter, r *http.Request) {
 		UserID:  user_ID,
 		EventID: request.EventID,
 		Qty:     request.Qty,
-		Status:  "waiting",
+		Status:  "pending",
 	}
 
 	ticket, err = h.TicketRepository.CreateTicket(ticket)
@@ -211,6 +211,25 @@ func (h *handlerTicket) PayTickets(w http.ResponseWriter, r *http.Request) {
 	user_ID := int(userInfo["id"].(float64))
 
 	tickets, err := h.TicketRepository.WherePayTicket(user_ID)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	response := dto.SuccessResult{Code: http.StatusOK, Data: tickets}
+	json.NewEncoder(w).Encode(response)
+}
+
+func (h *handlerTicket) UserTickets(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
+	user_ID := int(userInfo["id"].(float64))
+
+	tickets, err := h.TicketRepository.MyTicket(user_ID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}

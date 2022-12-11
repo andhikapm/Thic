@@ -12,7 +12,7 @@ const AddEvent = () => {
    const navigate = useNavigate();
 
    API.patch("/checkevent")
-   
+
    const contexts = useContext(AppContext);
    const [state,] = useContext(UserContext);
    const [form, setForm] = useState({
@@ -36,35 +36,33 @@ const AddEvent = () => {
         e.target.type === 'file' ? e.target.files : e.target.value,
       });
     };
-  
-   const HandleOnSubmit = useMutation( async(e) => {
+    
+   const HandleOnSubmit = async(e) => {
       try {
-      e.preventDefault()
-      console.log(form)
-      
-      const formData = new FormData();
-      formData.set('title', form.title);
-      formData.set('category', form.category);
-      formData.set('image', form.image[0], form.image[0].name);
-      formData.set('startdate', new Date(form.startdate.replace('T',' ').replace('-','/')).toUTCString());
-      formData.set('enddate', new Date(form.enddate.replace('T',' ').replace('-','/')).toUTCString());
-      formData.set('price', form.price);
-      formData.set('address', form.address);
-      formData.set('urlMap', form.urlMap);
-      formData.set('phone', form.phone);
-      formData.set('email', form.email);
-      formData.set('description', form.description);
+         e.preventDefault()
+         
+         const formData = new FormData();
+         formData.set('title', form.title);
+         formData.set('category', form.category);
+         formData.set('image', form.image[0], form.image[0].name);
+         formData.set('startdate', new Date(form.startdate.replace('T',' ').replace('-','/')).toUTCString());
+         formData.set('enddate', new Date(form.enddate.replace('T',' ').replace('-','/')).toUTCString());
+         formData.set('price', form.price);
+         formData.set('address', form.address);
+         formData.set('urlMap', form.urlMap);
+         formData.set('phone', form.phone);
+         formData.set('email', form.email);
+         formData.set('description', form.description);
 
-      const response = await API.post('/event', formData)
-  
-      console.log("data berhasil ditambahkan", response.data.data)
+         const response = await API.post('/event', formData)
+   
+         console.log("data berhasil ditambahkan", response)
   
       } catch (err) {
         console.log(err)
   
       }
-    })
-
+    }
 
    return (
       <>
@@ -73,7 +71,7 @@ const AddEvent = () => {
          >
             <h1 className='fw-bolder pb-4' style={{color: "#ff5555"}}>Add Event</h1>
             <div className='pt-5 pb-1' style={{padding: "0 160px"}}>
-               <Form onSubmit={(e) => HandleOnSubmit.mutate(e)}>
+               <Form onSubmit={HandleOnSubmit}>
                   <Form.Group style={{marginBottom: "26px"}}>
                      <Form.Control
                         className='border-start-0 border-end-0 border-top-0 rounded-0 px-1 fs-4'

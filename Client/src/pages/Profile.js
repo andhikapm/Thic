@@ -59,8 +59,9 @@ function Profile() {
             formData.set("image", editData?.image[0], editData?.image[0]?.name);
          }
 
-         await API.patch(`/user/${state.user.id}`, formData);
+         const res = await API.patch(`/user/${state.user.id}`, formData);
 
+         console.log(res)
          refetch()
          contexts.refreshNavbar()
          setIsEdit(false)

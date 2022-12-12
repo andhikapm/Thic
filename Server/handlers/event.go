@@ -156,9 +156,15 @@ func (h *handlerEvent) CreateEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var sentImg = ""
+
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
 	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "ThicToc"})
+
+	if filepath != "false" {
+		sentImg = resp.SecureURL
+	}
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -169,7 +175,7 @@ func (h *handlerEvent) CreateEvent(w http.ResponseWriter, r *http.Request) {
 		Category:    request.Category,
 		StartDate:   request.StartDate,
 		EndDate:     request.EndDate,
-		Image:       resp.SecureURL,
+		Image:       sentImg,
 		Price:       request.Price,
 		Address:     request.Address,
 		UrlMap:      request.UrlMap,

@@ -88,7 +88,8 @@ function Register() {
                   onChange={handleChange}
                />
             </Form.Group>
-            <Form.Group className="mb-4">
+
+            {/*<Form.Group className="mb-4">
                <Form.Select
                className='border-start-0 border-end-0 border-top-0 rounded-0 px-1 fs-5'
                style={{backgroundColor: "rgba(0,0,0,0)", borderBottom: "2px solid #484646"}}
@@ -100,7 +101,7 @@ function Register() {
                   <option value='customer'>As Customer</option>
                   <option value='admin'>As Admin</option>
                </Form.Select>
-            </Form.Group>
+   </Form.Group>*/}
             
             <Form.Group className="mb-4 mt-5">
                <Button variant='' className="w-100 fs-4 fw-bold text-white pt-1" style={{backgroundColor: "#ff5555"}} type='submit'>Register</Button>

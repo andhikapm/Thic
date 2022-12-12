@@ -44,7 +44,7 @@ const AddEvent = () => {
          const formData = new FormData();
          formData.set('title', form.title);
          formData.set('category', form.category);
-         formData.set('image', form.image[0], form.image[0].name);
+         //formData.set('image', form.image[0], form.image[0].name);
          formData.set('startdate', new Date(form.startdate.replace('T',' ').replace('-','/')).toUTCString());
          formData.set('enddate', new Date(form.enddate.replace('T',' ').replace('-','/')).toUTCString());
          formData.set('price', form.price);

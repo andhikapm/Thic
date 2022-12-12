@@ -63,6 +63,8 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 		fileBytes, err := ioutil.ReadAll(file)
 		if err != nil {
 			fmt.Println(err)
+			json.NewEncoder(w).Encode(err)
+			return
 		}
 
 		tempFile.Write(fileBytes)
